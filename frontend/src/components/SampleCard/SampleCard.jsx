@@ -31,7 +31,7 @@ export default function SampleCard () {
     <Card className={classes.root} variant='outlined'>
       <CardContent>
         <Typography className={classes.title} color='textSecondary' gutterBottom>
-          Whoooohoooooo!
+          Whoooohoooooo2!
         </Typography>
         <Typography variant='h5' component='h2'>
           be{bull}nev{bull}o{bull}lent
