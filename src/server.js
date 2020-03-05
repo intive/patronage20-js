@@ -2,7 +2,7 @@ const port = process.env.PORT || 3000 // remember to declare env PORT for heroku
 const app = require('./app')({
   port
 })
-// Run the server!
+// Heroku push tests
 const start = async () => {
   try {
     await app.listen({ port, host: '0.0.0.0' })
