@@ -39,5 +39,12 @@ module.exports = function ({ port }) {
       prefix: '.well-known'
     })
 
+
+    app.register(require('./routes/catch-all/catch-all-api-404'), {
+      prefix: '/api'
+    });
+  
+    app.register(require('./routes/catch-all/catch-all'));
+    
   return app
 }
