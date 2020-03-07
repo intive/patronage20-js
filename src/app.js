@@ -1,4 +1,5 @@
 const path = require('path')
+const config = require('../config.json')
 
 module.exports = function ({ port }) {
   const app = require('fastify')({ logger: true })
@@ -38,6 +39,10 @@ module.exports = function ({ port }) {
     }, {
       prefix: '.well-known'
     })
+
+  app.register(require('./routes/authors/authors'), {
+    prefix: config.apiPath + '/authors'
+  })
 
   return app
 }
