@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import { StoreContext } from 'redux-react-hook'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import store from './store'
 import App from './app'
 
