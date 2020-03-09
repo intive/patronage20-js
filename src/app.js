@@ -1,10 +1,10 @@
-const path = require('path');
+const path = require('path')
 
-module.exports = function({ port }) {
-  const app = require('fastify')({ logger: true });
-  const serveStatic = require('serve-static');
+module.exports = function ({ port }) {
+  const app = require('fastify')({ logger: true })
+  const serveStatic = require('serve-static')
 
-  app.use('/', serveStatic(path.join(__dirname, '..', 'frontend', 'dist')));
+  app.use('/', serveStatic(path.join(__dirname, '..', 'frontend', 'dist')))
 
   app.register(
     (instance, opts, next) => {
@@ -29,22 +29,22 @@ module.exports = function({ port }) {
           exposeRoute: true
         })
         .ready(err => {
-          if (err) throw err;
-          instance.swagger();
-        });
+          if (err) throw err
+          instance.swagger()
+        })
 
-      instance.register(require('./routes/well-known/health-check'));
+      instance.register(require('./routes/well-known/health-check'))
 
-      next();
+      next()
     },
     {
       prefix: '.well-known'
     }
-  );
+  )
 
   app.register(require('./routes/authors'), {
     prefix: '/api/v1/authors'
-  });
+  })
 
   app.register(require('./routes/catch-all/catch-all-api-404'), {
     prefix: '/api'
