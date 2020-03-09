@@ -18,6 +18,6 @@ const routes = async (fastify, options) => {
       ? reply.send(author)
       : reply.status(400).send('Server cannot process the request.')
   })
-};
+}
 
 module.exports = routes
