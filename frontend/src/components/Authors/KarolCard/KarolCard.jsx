@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
+import axios from 'axios'
 import Button from '@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
@@ -26,23 +27,21 @@ export default function KarolCard () {
 
   const classes = useStyles()
 
+  const fetchData = async () => {
+    const response = await axios.get('/api/v1/authors/' + authorData.id)
+    const data = response.data
+    setAuthorData(data)
+  }
+
   useEffect(() => {
     document.body.className = classes.body
     document.title = 'Karol Dzialowski'
 
-    fetch('http://localhost:3000/api/v1/authors/' + authorData.id)
-      .then((response) => {
-        if (response.status !== 200) throw new Error()
-        return response.json()
-      })
-      .then((data) => {
-        setAuthorData(data)
-        console.log(data)
-      })
+    fetchData()
   }, [])
 
   return (
-    <Box>
+    <Box data-testid='karol-card'>
       <Box className={classes.header}>
         <Box className={classes.center}>
           <a href={authorData.github}>
