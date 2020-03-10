@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Fade, Slide, Grid, Paper, Avatar, Typography } from '@material-ui/core'
+import { Fade, Slide, Grid, Paper, Avatar, Typography, Link } from '@material-ui/core'
 import GitHubIcon from '@material-ui/icons/GitHub'
 import Particles from 'react-particles-js'
 import { useStyles, particlesOptions } from './index'
@@ -68,6 +68,7 @@ const AboutMarta = () => {
                 <a
                   className={classes.color}
                   href={authorState.github}
+                  style={{ zIndex: 1 }}
                 >
                   <GitHubIcon fontSize='large' />
                 </a>

@@ -1,7 +1,7 @@
-import AboutMarta from './AboutMarta.jsx';
-import { makeStyles } from '@material-ui/core/styles';
+import AboutMarta from './AboutMarta.jsx'
+import { makeStyles } from '@material-ui/core/styles'
 
-export default AboutMarta;
+export default AboutMarta
 
 export const useStyles = makeStyles(theme => ({
   root: {
@@ -29,7 +29,7 @@ export const useStyles = makeStyles(theme => ({
     bottom: 0,
     left: 0
   }
-}));
+}))
 
 export const particlesOptions = {
   particles: {
@@ -41,4 +41,4 @@ export const particlesOptions = {
       }
     }
   }
-};
+}
