@@ -1,8 +1,6 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
+import { Fade, Slide } from '@material-ui/core';
+import { Grid, Paper, Avatar, Typography } from '@material-ui/core';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import Particles from 'react-particles-js';
 import { useStyles, particlesOptions } from './index';
@@ -14,8 +12,7 @@ const AboutMarta = () => {
     <div className={classes.root}>
       <Particles className={classes.particles} params={particlesOptions} />
       <Grid container justify="center" alignItems="center" direction="row">
-        <Paper
-          style={{ width: 400, padding: 20, backgroundColor: 'transparent' }}>
+        <Paper className={classes.paper}>
           <Grid
             container
             direction="row"
@@ -23,29 +20,44 @@ const AboutMarta = () => {
             spacing={5}
             alignItems="center">
             <Grid item>
-              <Avatar
-                alt="Marta"
-                src="http://bit.ly/334tOSf"
-                className={classes.large}
-              />
+              <Fade in="true" timeout={4000}>
+                <Avatar
+                  alt="Marta"
+                  src="http://bit.ly/334tOSf"
+                  className={classes.large}
+                />
+              </Fade>
             </Grid>
             <Grid item>
               <Grid
+                className={classes.color}
                 container
                 direction="column"
-                alignItems="center"
-                style={{ color: '#fff' }}>
-                <Typography align="justify" gutterBottom variant="h4">
-                  marta
-                </Typography>
-                <Typography variant="subtitle1" gutterBottom>
+                alignItems="center">
+                <Slide in="true" timeout={2000}>
+                  <Typography
+                    style={{ fontFamily: 'Poppins' }}
+                    align="justify"
+                    variant="h1">
+                    marta
+                  </Typography>
+                </Slide>
+                <Typography
+                  style={{ fontFamily: 'Poppins' }}
+                  variant="subtitle1"
+                  gutterBottom>
                   Smart Home
                 </Typography>
-                <Typography gutterBottom>intive</Typography>
+                <Typography style={{ fontFamily: 'Poppins' }} gutterBottom>
+                  intive
+                </Typography>
               </Grid>
               <Grid container justify="center" style={{ padding: 5 }}>
-                <a href="https://github.com/MartaJaszewska" target="_blank">
-                  <GitHubIcon style={{ color: '#fff' }} fontSize="large" />
+                <a
+                  className={classes.color}
+                  href="https://github.com/MartaJaszewska"
+                  target="_blank">
+                  <GitHubIcon fontSize="large" />
                 </a>
               </Grid>
             </Grid>
