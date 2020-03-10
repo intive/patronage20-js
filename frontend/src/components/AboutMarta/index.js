@@ -5,11 +5,18 @@ export default AboutMarta;
 
 export const useStyles = makeStyles(theme => ({
   root: {
-    color: '#fff',
     height: '100vh',
     display: 'flex',
     alignSelf: 'center',
     background: 'linear-gradient(113deg, #ff5edf 0%, rgba(13,156,147,1) 100%)'
+  },
+  paper: {
+    width: 600,
+    padding: 20,
+    backgroundColor: 'transparent'
+  },
+  color: {
+    color: '#fff'
   },
   large: {
     width: theme.spacing(25),
