@@ -12,8 +12,8 @@ const routes = async (fastify, options) => {
       : reply.status(400).send('Server cannot process the request.')
   })
 
-  fastify.get('/6', async (request, reply) => {
-    const author = await authors.find(author => author.id === 6)
+  fastify.get('/5', async (request, reply) => {
+    const author = await authors.find(author => author.id === 5)
     author
       ? reply.send(author)
       : reply.status(400).send('Server cannot process the request.')

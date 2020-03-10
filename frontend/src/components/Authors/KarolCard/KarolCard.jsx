@@ -17,7 +17,7 @@ import Illustration from './Illustration'
 
 export default function KarolCard () {
   const defaultData = {
-    id: 6,
+    id: 5,
     name: '',
     github: '',
     avatar: '',
