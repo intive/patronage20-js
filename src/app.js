@@ -32,6 +32,7 @@ module.exports = function ({ port }) {
           },
           exposeRoute: true
         })
+
         .ready(err => {
           if (err) throw err
           instance.swagger()
@@ -51,4 +52,4 @@ module.exports = function ({ port }) {
   })
 
   return app
-}
+};
