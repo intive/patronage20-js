@@ -36,15 +36,15 @@ describe('/api/v1/authors', function () {
     })
   })
 
-  describe('GET author with id 6', () => {
-    test('should return status code 200 and author with id 1', async function () {
+  describe('GET author with id 5', () => {
+    test('should return status code 200 and author with id 5', async function () {
       const result = await instance.inject({
         method: 'GET',
-        url: '/api/v1/authors/6'
+        url: '/api/v1/authors/5'
       })
       expect(result.statusCode).toBe(200)
       expect(JSON.parse(result.payload)).toEqual(
-        authors.find(author => author.id === 6)
+        authors.find(author => author.id === 5)
       )
     })
   })
