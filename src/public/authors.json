@@ -1,35 +1,33 @@
-{
-  "authors": [
-    {
-      "id": 1,
-      "name": "Marta",
-      "github": "https://github.com/MartaJaszewska",
-      "avatar": "avatar"
-    },
-    {
-      "id": 2,
-      "name": "",
-      "github": "https://github.com/",
-      "avatar": "avatar"
-    },
-    {
-      "id": 3,
-      "name": "",
-      "github": "https://github.com/",
-      "avatar": "avatar"
-    },
-    {
-      "id": 4,
-      "name": "Kamil",
-      "github": "https://github.com/",
-      "avatar": "avatar"
-    },
-    {
-      "id": 5,
-      "name": "Karol",
-      "github": "https://github.com/karlosos",
-      "avatar": "https://www.gravatar.com/avatar/5721fbdfcafc3269ac39d9f98c6eba02?s=400",
-      "linkedin": "https://www.linkedin.com/in/karol-dzialowski/"
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "name": "Marta",
+    "github": "https://github.com/MartaJaszewska",
+    "avatar": "avatar"
+  },
+  {
+    "id": 2,
+    "name": "",
+    "github": "https://github.com/",
+    "avatar": "avatar"
+  },
+  {
+    "id": 3,
+    "name": "",
+    "github": "https://github.com/",
+    "avatar": "avatar"
+  },
+  {
+    "id": 4,
+    "name": "Kamil",
+    "github": "https://github.com/",
+    "avatar": "avatar"
+  },
+  {
+    "id": 5,
+    "name": "Karol",
+    "github": "https://github.com/karlosos",
+    "avatar": "https://www.gravatar.com/avatar/5721fbdfcafc3269ac39d9f98c6eba02?s=400",
+    "linkedin": "https://www.linkedin.com/in/karol-dzialowski/"
+  }
+]
