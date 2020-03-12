@@ -4,12 +4,12 @@ import './index.css'
 import { StoreContext } from 'redux-react-hook'
 import { BrowserRouter, Route } from 'react-router-dom'
 import store from './store'
-import AboutMarta from '../../frontend/src/components/AboutMarta'
+import Marta from '../../frontend/src/components/Marta'
 
 ReactDOM.render(
   <BrowserRouter>
     <StoreContext.Provider value={store}>
-      <Route component={AboutMarta} />
+      <Route component={Marta} />
     </StoreContext.Provider>
   </BrowserRouter>,
   document.getElementById('root')

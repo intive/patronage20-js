@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Grid, CircularProgress } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import Particles from 'react-particles-js'
-import { useStyles, particlesOptions } from './index'
+import { useStyles, particlesOptions, ColorCircularProgress } from './index'
 import Card from './Card.jsx'
 
 const AboutMarta = () => {
@@ -20,8 +20,8 @@ const AboutMarta = () => {
       <Particles className={classes.particles} params={particlesOptions} />
       <Grid container justify='center' alignItems='center' direction='row'>
         {
-          !authorState
-            ? <CircularProgress />
+          !authorState.id
+            ? <ColorCircularProgress />
             : <Card authorState={authorState} />
         }
       </Grid>

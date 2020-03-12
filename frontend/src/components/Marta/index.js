@@ -1,7 +1,14 @@
-import AboutMarta from './AboutMarta.jsx'
-import { makeStyles } from '@material-ui/core/styles'
+import Marta from './AboutMarta.jsx'
+import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { CircularProgress } from '@material-ui/core'
 
-export default AboutMarta
+export default Marta
+
+export const ColorCircularProgress = withStyles({
+  root: {
+    color: '#fff'
+  }
+})(CircularProgress)
 
 export const useStyles = makeStyles(theme => ({
   root: {
