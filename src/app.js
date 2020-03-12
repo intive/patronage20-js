@@ -51,5 +51,11 @@ module.exports = function ({ port }) {
     prefix: '/api/v1/authors'
   })
 
+  app.register(require('./routes/catch-all/catch-all-api-404'), {
+    prefix: '/api'
+  })
+
+  app.register(require('./routes/catch-all/catch-all'))
+
   return app
-};
+}
