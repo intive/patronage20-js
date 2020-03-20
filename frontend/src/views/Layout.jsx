@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, makeStyles } from '@material-ui/core'
 import Navigation from '../components/Navigation/NavigationBar/Navigation'
+import WarningSnackbar from '../components/Snackbar'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -12,10 +13,12 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+// eslint-disable-next-line react/prop-types
 const Layout = ({ children }) => {
   const classes = useStyles()
   return (
     <Grid container maxwidth='xs' className={classes.root} data-testid='dashboard-id'>
+      <WarningSnackbar />
       <Navigation />
       <Grid container maxwidth='xs' className={classes.content}>
         {children}
