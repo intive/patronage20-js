@@ -1,6 +1,7 @@
 
-import React from 'react'
-import { Button, IconButton, Snackbar, SnackbarContent, Slide } from '@material-ui/core'
+import React, { useEffect } from 'react'
+import axios from 'axios'
+import { Snackbar, SnackbarContent, Slide, IconButton } from '@material-ui/core'
 import { Warning, Close } from '@material-ui/icons'
 import { amber } from '@material-ui/core/colors'
 import { makeStyles } from '@material-ui/core/styles'
@@ -20,52 +21,62 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const TransitionDown = props => <Slide {...props} direction='down' />
-
-const WarningSnackbar = (props) => {
+const WarningSnackbar = () => {
   const [open, setOpen] = React.useState(false)
-  const [transition, setTransition] = React.useState(undefined)
+
   const classes = useStyles()
 
-  const handleClick = Transition => () => {
-    setTransition(() => Transition)
-    setOpen(true)
+  const checkConnection = () => {
+    if (!navigator.onLine) {
+      setOpen(true)
+    } else {
+      axios.get('/.well-known/health-check', { timeout: 5000 })
+        .then(() => {
+          setOpen(false)
+        })
+        .catch((error) => {
+          error.response.status === 408
+            ? setOpen(true)
+            : console.error(error)
+        })
+    }
   }
+
+  useEffect(() => {
+    checkConnection()
+    setInterval(checkConnection, 10000)
+  }, [])
 
   const handleClose = () => {
     setOpen(false)
   }
 
   return (
-    <div style={{ position: 'fixed', backgroundColor: '#444aaa', width: 100, height: 100 }}>
-      <Button onClick={handleClick(TransitionDown)}>Down</Button>
-      <Snackbar
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={transition}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <SnackbarContent
-          className={classes.warning}
-          message={
-            <span className={classes.message} id='client-snackbar'>
-              <Warning className={classes.icon} />
-            WTF
-            </span>
-          }
-          action={[
-            <IconButton
-              key='close'
-              aria-label='Close'
-              color='inherit'
-              onClick={handleClose}
-            >
-              <Close />
-            </IconButton>
-          ]}
-        />
-      </Snackbar>
-    </div>
+    <Snackbar
+      open={open}
+      TransitionComponent={(props) => <Slide {...props} direction='down' />}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+    >
+      <SnackbarContent
+        className={classes.warning}
+        message={
+          <span className={classes.message} id='client-snackbar'>
+            <Warning className={classes.icon} />
+            Hej, coś nie styka! Sprawdź połączenie!
+          </span>
+        }
+        action={[
+          <IconButton
+            key='close'
+            aria-label='Close'
+            color='inherit'
+            onClick={handleClose}
+          >
+            <Close />
+          </IconButton>
+        ]}
+      />
+    </Snackbar>
   )
 }
 
