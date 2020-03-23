@@ -53,6 +53,7 @@ const WarningSnackbar = () => {
 
   return (
     <Snackbar
+      data-testedid='snackbar'
       open={open}
       TransitionComponent={(props) => <Slide {...props} direction='down' />}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
