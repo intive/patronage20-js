@@ -44,7 +44,11 @@ const WarningSnackbar = () => {
 
   useEffect(() => {
     checkConnection()
-    setInterval(checkConnection, 10000)
+    const interval = setInterval(checkConnection, 10000)
+    return () => {
+      setOpen(false)
+      clearInterval(interval)
+    }
   }, [])
 
   const handleClose = () => {
