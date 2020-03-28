@@ -21,26 +21,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+export const url = '/.well-known/health-check'
+export const fetchData = async timeout => axios.get(url, { timeout: timeout })
+
 const WarningSnackbar = () => {
   const [open, setOpen] = React.useState(false)
-
-  const classes = useStyles()
-
-  const checkConnection = () => {
-    if (!navigator.onLine) {
-      setOpen(true)
-    } else {
-      axios.get('/.well-known/health-check', { timeout: 5000 })
-        .then(() => {
-          setOpen(false)
-        })
-        .catch((error) => {
-          error.response.status === 408
-            ? setOpen(true)
-            : console.error(error)
-        })
-    }
-  }
 
   useEffect(() => {
     checkConnection()
@@ -51,12 +36,31 @@ const WarningSnackbar = () => {
     }
   }, [])
 
+  const classes = useStyles()
+
+  const checkConnection = () => {
+    if (!navigator.onLine) {
+      setOpen(true)
+    } else {
+      fetchData(5000)
+        .then(() => {
+          setOpen(false)
+        })
+        .catch((error) => {
+          error.code === 'ECONNABORTED'
+            ? setOpen(true)
+            : console.error(error)
+        })
+    }
+  }
+
   const handleClose = () => {
     setOpen(false)
   }
 
   return (
     <Snackbar
+      id='snackbar'
       data-testedid='snackbar'
       open={open}
       TransitionComponent={(props) => <Slide {...props} direction='down' />}
