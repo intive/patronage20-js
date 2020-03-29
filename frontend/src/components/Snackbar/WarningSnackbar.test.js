@@ -1,38 +1,73 @@
 import React from 'react'
-import { cleanup } from '@testing-library/react'
+import { cleanup, render, waitForElement } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom/matchers'
 import { create } from 'react-test-renderer'
 import WarningSnackbar from './index'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
-const mock = new MockAdapter(axios, { delayResponse: 5000 })
 
-afterEach(cleanup)
-describe('WarningSnackbar component', () => {
-  it('Matches the snapshot', () => {
+const axiosMock = new MockAdapter(axios)
+const pingEndpointMock = () => axios.get('/health-check', {
+  timeout: 5000
+})
+describe.only('WarningSnackbar component', () => {
+  beforeEach(() => {
+    jest.useFakeTimers()
+  })
+
+  afterEach(async () => {
+    jest.clearAllTimers()
+    jest.useRealTimers()
+    await cleanup()
+  })
+
+  it.skip('Matches the snapshot', () => {
     const snackbar = create(<WarningSnackbar />)
     expect(snackbar.toJSON()).toMatchSnapshot()
   })
 
-  it('check response', () => {
-    jest.useFakeTimers()
-    const snackbar = create(<WarningSnackbar />)
+  it('should ping the health-check endpoint after 10 second and still be hidden', (done) => {
+    const callMock = jest
+      .fn()
+      .mockReturnValue([200, {}])
+      .mockName('serverEndpoint')
 
-    const setState = jest.fn()
-    const useStateSpy = jest.spyOn(React, 'useState')
-    useStateSpy.mockImplementation((init) => [init, setState])
+    axiosMock.onGet('/health-check')
+      .reply(callMock)
 
-    mock.onGet('/.well-known/health-check').reply(200, { message: 'OK' })
+    const { container } = render(<WarningSnackbar pingEndpoint={pingEndpointMock} />)
+    jest.advanceTimersByTime(20100)
 
-    axios.get('/.well-known/health-check').then(response => {
-      console.log(response)
+    setImmediate(() => {
+      expect(callMock).toHaveBeenCalledTimes(3)
+      expect(container.firstChild).toBeNull()
+      done()
     })
-    expect(setState).toHaveBeenCalledTimes(0) // Success!
+  })
 
-    jest.advanceTimersByTime(5000)
-    axios.get('/.well-known/health-check').then(response => {
-      console.log(response)
-    })
-    // expect(setState).toHaveBeenCalledTimes(2)
+  it('should open the snackabar when the HTTP code is 408', async () => {
+    const callMock = jest.fn()
+      .mockReturnValueOnce([200, {}])
+      .mockReturnValueOnce([408, {}])
+      .mockName('serverEndpoint')
+
+    axiosMock
+      .onGet('/health-check')
+      .reply(callMock)
+
+    const { getByTestId } = render(<WarningSnackbar pingEndpoint={pingEndpointMock} />)
+    jest.advanceTimersByTime(11000)
+    await waitForElement(() => getByTestId('snackbar'))
+    expect(callMock).toHaveBeenCalledTimes(2)
+  })
+
+  it('should open the snackabar when there is a network error', async () => {
+    axiosMock.onGet('/health-check')
+      .networkError()
+
+    const { getByTestId } = render(<WarningSnackbar pingEndpoint={pingEndpointMock} />)
+    await waitForElement(() => getByTestId('snackbar'))
   })
 })

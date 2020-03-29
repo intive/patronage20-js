@@ -1,6 +1,6 @@
 
-import React, { useEffect } from 'react'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+
 import { Snackbar, SnackbarContent, Slide, IconButton } from '@material-ui/core'
 import { Warning, Close } from '@material-ui/icons'
 import { amber } from '@material-ui/core/colors'
@@ -21,43 +21,46 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const WarningSnackbar = () => {
-  const [open, setOpen] = React.useState(false)
-
+// TODO: this component is not just a warning snackbar. It's a connection information component
+// because it's not only just showing the information also doing the call and handling it.
+const WarningSnackbar = ({ pingEndpoint }) => {
+  const [open, setOpen] = useState(false)
   const classes = useStyles()
+  const showSnackbar = (error) => {
+    error.response.status === 408
+      ? setOpen(true)
+      : console.error(error)
+  }
 
-  const checkConnection = () => {
+  const checkConnection = function () {
+    // TODO: the event listener for network status can be used
+    // https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/onLine
     if (!navigator.onLine) {
       setOpen(true)
     } else {
-      axios.get('/.well-known/health-check', { timeout: 5000 })
-        .then(() => {
-          setOpen(false)
-        })
-        .catch((error) => {
-          error.response.status === 408
-            ? setOpen(true)
-            : console.error(error)
-        })
+      pingEndpoint()
+        .then(() => setOpen(false))
+        .catch(showSnackbar)
     }
   }
 
+  let interval
   useEffect(() => {
+    clearInterval(interval)
     checkConnection()
-    const interval = setInterval(checkConnection, 10000)
+    interval = setInterval(checkConnection, 10000)
+
     return () => {
       setOpen(false)
       clearInterval(interval)
     }
   }, [])
 
-  const handleClose = () => {
-    setOpen(false)
-  }
+  const handleClose = () => setOpen(false)
 
   return (
     <Snackbar
-      data-testedid='snackbar'
+      data-testid='snackbar'
       open={open}
       TransitionComponent={(props) => <Slide {...props} direction='down' />}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
