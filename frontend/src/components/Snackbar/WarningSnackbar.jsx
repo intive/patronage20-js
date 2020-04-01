@@ -21,8 +21,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-// TODO: this component is not just a warning snackbar. It's a connection information component
-// because it's not only just showing the information also doing the call and handling it.
+// eslint-disable-next-line react/prop-types
 const WarningSnackbar = ({ pingEndpoint }) => {
   const [open, setOpen] = useState(false)
   const classes = useStyles()
@@ -33,8 +32,6 @@ const WarningSnackbar = ({ pingEndpoint }) => {
   }
 
   const checkConnection = function () {
-    // TODO: the event listener for network status can be used
-    // https://developer.mozilla.org/en-US/docs/Web/API/NavigatorOnLine/onLine
     if (!navigator.onLine) {
       setOpen(true)
     } else {
@@ -55,6 +52,9 @@ const WarningSnackbar = ({ pingEndpoint }) => {
       clearInterval(interval)
     }
   }, [])
+
+  useEffect(() => window.addEventListener('offline', () => setOpen(true)))
+  useEffect(() => window.addEventListener('online', () => setOpen(false)))
 
   const handleClose = () => setOpen(false)
 
