@@ -26,7 +26,7 @@ const WarningSnackbar = ({ pingEndpoint }) => {
   const [open, setOpen] = useState(false)
   const classes = useStyles()
   const showSnackbar = (error) => {
-    error.response.status === 408
+    !error.response || error.response.status === 408
       ? setOpen(true)
       : console.error(error)
   }
