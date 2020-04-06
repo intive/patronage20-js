@@ -43,9 +43,9 @@ const WarningSnackbar = ({ pingEndpoint }) => {
 
   let interval
   useEffect(() => {
-    clearInterval(interval)
+    // clearInterval(interval)
     checkConnection()
-    interval = setInterval(checkConnection, 10000)
+    interval = setInterval(() => checkConnection(), 10000)
 
     return () => {
       setOpen(false)
