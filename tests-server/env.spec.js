@@ -6,19 +6,16 @@ describe('Environment variables', () => {
   let instance
   let restore
   beforeEach(async () => {
-    instance = await app({ port: 3000 }).ready()
     restore = mockedEnv({
       COOKIE_VALUE: '',
       COOKIE_NAME: ''
     })
+    instance = await app({ port: 3000 }).ready()
   })
 
-  afterEach(() => {
+  afterEach(async () => {
     restore()
-  })
-
-  afterAll(async () => {
-    instance.stop()
+    await instance.close()
   })
 
   describe('COOKIE_VALUE', () => {

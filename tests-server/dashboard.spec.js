@@ -1,4 +1,4 @@
-/* globals beforeAll, afterAll, describe, test, expect */
+/* globals beforeEach, describe, test, expect */
 const mockedEnv = require('mocked-env')
 const app = require('./../src/app.js')
 
@@ -15,12 +15,9 @@ describe('/api/v1/dashboard', function () {
     instance = await app({ port: 3000 }).ready()
   })
 
-  afterEach(() => {
+  afterEach(async () => {
     restore()
-  })
-
-  afterAll(async () => {
-    instance.stop()
+    await instance.close()
   })
 
   test('should assign empty string to fastify.config.GATEWAY_URL when there is no GATEWAY_URL environment variable', async function () {
