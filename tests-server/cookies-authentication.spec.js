@@ -6,7 +6,6 @@ describe('Cookie authentication', () => {
   let instance
   let restore
 
-
   describe('COOKIE_NAME and COOKIE_VALUE are defined in environment variables', () => {
     beforeEach(async () => {
       restore = mockedEnv({
