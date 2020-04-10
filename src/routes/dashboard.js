@@ -11,10 +11,10 @@ const schema = {
 }
 
 const dashboard = async function (fastify, options, next) {
-  fastify.get('/', schema, async (request, reply) => {
-    const gatewayUrl = fastify.config.GATEWAY_URL
+  fastify.get('/', schema, async function (request, reply) {
+    const gatewayUrl = this.config.GATEWAY_URL
     const gatewayResponse = await axios.get(`${gatewayUrl}/dashboard`)
-    const res = await fastify.db.getAllSensors(fastify.mongo.db)
+    const res = await this.db.getAllSensors(this.mongo.db)
     let data = await helpers.changeID(gatewayResponse.data)
     data = await helpers.joinSensors(data, res)
     reply.code(200).send(data)
