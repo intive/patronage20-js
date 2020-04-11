@@ -2,10 +2,11 @@ import actionTypes from '../../common/constants/actionTypes'
 const initialState = {
   notifications: [],
   fetchError: undefined,
-  fetching: false
+  fetching: false,
+  isDrawerOpen: false
 }
 
-export default function author (state = initialState, action = {}) {
+export default function notification (state = initialState, action = {}) {
   switch (action.type) {
     case actionTypes.NOTIFICATIONS_FETCH_REQUEST:
       return { ...state, fetching: true, fetchError: undefined }
@@ -15,6 +16,10 @@ export default function author (state = initialState, action = {}) {
       return { ...state, fetching: false, fetchError: action.error }
     case actionTypes.NOTIFICATIONS_FETCH_CANCEL:
       return { ...state, fetching: false, fetchError: undefined }
+    case actionTypes.NOTIFICATION_DRAWER_OPEN:
+      return { ...state, isDrawerOpen: true }
+    case actionTypes.NOTIFICATION_DRAWER_CLOSE:
+      return { ...state, isDrawerOpen: false }
     default:
       return state
   }

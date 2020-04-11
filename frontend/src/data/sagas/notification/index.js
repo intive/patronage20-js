@@ -5,5 +5,5 @@ import actionTypes from '@constants/actionTypes'
 import { makeFetchNotificationsSaga } from './notificationSagas'
 
 export function * watchNotifications () {
-  yield takeLatest(actionTypes.NOTIFICATION_FETCH_REQUEST, makeFetchNotificationsSaga(fetchNotifications, fetchNotificationsSuccess, fetchNotificationsError))
+  yield takeLatest(actionTypes.NOTIFICATIONS_FETCH_REQUEST, makeFetchNotificationsSaga(fetchNotifications, fetchNotificationsSuccess, fetchNotificationsError))
 }

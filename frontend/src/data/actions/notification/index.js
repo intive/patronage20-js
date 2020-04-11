@@ -1,1 +1,1 @@
-export * from './fetchNotifications'
+export * from './notificationActions'

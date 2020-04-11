@@ -4,7 +4,7 @@ import Navigation from '../components/Navigation/NavigationBar/Navigation'
 import WarningSnackbar from '../components/UI/Snackbars/ConnectionWarningSnackbar'
 import axios from 'axios'
 import CustomSnackbarProvider from '../components/UI/Snackbars/CustomSnackbarProvider'
-import TemporaryDrawer from '../components/UI/Drawer/'
+import TemporaryDrawer from '../components/UI/Drawer'
 
 const pingEndpoint = () => axios.get('/.well-known/health-check', { timeout: 5000 })
 

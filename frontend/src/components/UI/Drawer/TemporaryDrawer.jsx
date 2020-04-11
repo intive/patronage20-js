@@ -1,29 +1,29 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Drawer from '@material-ui/core/Drawer'
-// import Button from '@material-ui/core/Button'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import mockNotifications from '../../../data/api/notification/mockNotifications'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-const useStyles = makeStyles({
-  list: {
-    width: 250
-  },
-  fullList: {
-    width: 'auto'
-  }
-})
+import { fetchNotificationsRequest, fetchNotificationsCancel } from '@data/actions/notification'
+import TemporaryDrawerList from './TemporaryDrawerList.jsx'
+import Drawer from '@material-ui/core/Drawer'
+import Button from '@material-ui/core/Button'
 
 const TemporaryDrawer = () => {
-  const classes = useStyles()
-  const [state, setState] = React.useState({
-    open: true
+  const [state, setState] = useState({
+    open: false
   })
 
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchNotificationsRequest())
+    return () => {
+      dispatch(fetchNotificationsCancel())
+    }
+  }, [])
+
+  const { notifications, fetchError, fetching, isDrawerOpen } = useSelector((state) => state.notification)
+
   const toggleDrawer = (open) => (event) => {
-    console.log(mockNotifications)
+    console.log(notifications, fetchError, fetching, isDrawerOpen)
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return
     }
@@ -31,27 +31,11 @@ const TemporaryDrawer = () => {
     setState({ ...state, open: open })
   }
 
-  const list = () => (
-    <div
-      className={classes.list}
-      role='presentation'
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
-      <List>
-        {mockNotifications.map((notification) => (
-          <ListItem button key={notification.id}>
-            <ListItemText primary={notification.id} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  )
-
   return (
     <div>
+      <Button onClick={toggleDrawer(true)}>OPEN</Button>
       <Drawer anchor='right' open={state.open} onClose={toggleDrawer(false)}>
-        {list('right')}
+        <TemporaryDrawerList toggleDrawer={toggleDrawer} notifications={notifications} />
       </Drawer>
     </div>
   )

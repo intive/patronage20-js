@@ -1,4 +1,4 @@
-import actionTypes from '@constants/actionTypes'
+import actionTypes from '../../../common/constants/actionTypes'
 
 export function fetchNotificationsRequest () {
   return {
@@ -23,5 +23,16 @@ export function fetchNotificationsError (error) {
 export function fetchNotificationsCancel () {
   return {
     type: actionTypes.NOTIFICATIONS_FETCH_CANCEL
+  }
+}
+
+export function openNotificationDrawer () {
+  return {
+    type: actionTypes.NOTIFICATION_DRAWER_OPEN
+  }
+}
+export function closeNotificationDrawer () {
+  return {
+    type: actionTypes.NOTIFICATION_DRAWER_CLOSE
   }
 }
