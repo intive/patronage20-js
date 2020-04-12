@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { fetchNotificationsRequest, fetchNotificationsCancel } from '@data/actions/notification'
+import { fetchNotificationsRequest, fetchNotificationsCancel, closeNotificationDrawer } from '@data/actions/notification'
 import TemporaryDrawerList from './TemporaryDrawerList.jsx'
 import Drawer from '@material-ui/core/Drawer'
-import Button from '@material-ui/core/Button'
+import Spinner from '../Spinner'
+import Page404 from '../Page404'
 
 const TemporaryDrawer = () => {
-  const [state, setState] = useState({
-    open: false
-  })
-
   const dispatch = useDispatch()
+  const { notifications, fetchError, fetching, isDrawerOpen } = useSelector((state) => state.notification)
 
   useEffect(() => {
     dispatch(fetchNotificationsRequest())
@@ -20,22 +18,24 @@ const TemporaryDrawer = () => {
     }
   }, [])
 
-  const { notifications, fetchError, fetching, isDrawerOpen } = useSelector((state) => state.notification)
-
-  const toggleDrawer = (open) => (event) => {
-    console.log(notifications, fetchError, fetching, isDrawerOpen)
+  const handleDrawerClose = () => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return
     }
+    dispatch(closeNotificationDrawer())
+  }
 
-    setState({ ...state, open: open })
+  if (fetchError) {
+    return <Page404 />
   }
 
   return (
     <div>
-      <Button onClick={toggleDrawer(true)}>OPEN</Button>
-      <Drawer anchor='right' open={state.open} onClose={toggleDrawer(false)}>
-        <TemporaryDrawerList toggleDrawer={toggleDrawer} notifications={notifications} />
+      <Drawer anchor='right' open={isDrawerOpen} onClose={handleDrawerClose()}>
+        {
+          fetching ? <Spinner />
+            : <TemporaryDrawerList notifications={notifications} />
+        }
       </Drawer>
     </div>
   )

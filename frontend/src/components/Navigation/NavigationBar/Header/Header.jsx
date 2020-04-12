@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
@@ -8,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-
+import { openNotificationDrawer } from '../../../../data/actions/notification'
 const useStyles = makeStyles(theme => ({
   bar: {
     backgroundColor: '#334455',
@@ -43,9 +44,15 @@ export default function Header () {
   const myClasses = useStyles()
   const location = useLocation()
 
-  const [value, setValue] = React.useState(checkActive(location.pathname))
+  const [value, setValue] = useState(checkActive(location.pathname))
+
   const handleChange = (event, newValue) => {
     setValue(newValue)
+  }
+
+  const dispatch = useDispatch()
+  const handleDrawerOpen = () => {
+    dispatch(openNotificationDrawer())
   }
 
   return (
@@ -58,7 +65,7 @@ export default function Header () {
             </Typography>
           </Box>
           <Box p={1}>
-            <IconButton aria-label='notifications' color='inherit'>
+            <IconButton aria-label='notifications' color='inherit' onClick={handleDrawerOpen}>
               <NotificationsIcon fontSize='large' />
             </IconButton>
           </Box>

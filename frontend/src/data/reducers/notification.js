@@ -1,4 +1,5 @@
 import actionTypes from '../../common/constants/actionTypes'
+
 const initialState = {
   notifications: [],
   fetchError: undefined,

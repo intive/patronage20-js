@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
@@ -12,15 +13,13 @@ const useStyles = makeStyles({
   }
 })
 
-const TemporaryDrawerList = ({ notifications, toggleDrawer }) => {
+const TemporaryDrawerList = ({ notifications }) => {
   const classes = useStyles()
 
   return (
     <div
       className={classes.list}
       role='presentation'
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
     >
       <List>
         {notifications.map((notification) => (
