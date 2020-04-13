@@ -21,6 +21,14 @@ export default function notification (state = initialState, action = {}) {
       return { ...state, isDrawerOpen: true }
     case actionTypes.NOTIFICATION_DRAWER_CLOSE:
       return { ...state, isDrawerOpen: false }
+    case actionTypes.NOTIFICATIONS_CHECKED:
+      return {
+        ...state,
+        notifications:
+        state.notifications.map(notification =>
+          notification.id === action.id ? ({ ...notification, isChecked: true }) : notification
+        )
+      }
     default:
       return state
   }

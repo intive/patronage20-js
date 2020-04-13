@@ -36,3 +36,10 @@ export function closeNotificationDrawer () {
     type: actionTypes.NOTIFICATION_DRAWER_CLOSE
   }
 }
+
+export function checkNotification (id) {
+  return {
+    type: actionTypes.NOTIFICATIONS_CHECKED,
+    id
+  }
+}

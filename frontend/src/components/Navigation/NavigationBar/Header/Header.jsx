@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import IconButton from '@material-ui/core/IconButton'
+import Badge from '@material-ui/core/Badge'
 import { makeStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
@@ -40,6 +41,11 @@ function checkActive (url) {
   return sites[url] || 0
 }
 
+function notificationsNumber (notifications) {
+  const nonCheckedNotifications = notifications.filter(notification => !notification.isChecked)
+  return nonCheckedNotifications.length
+}
+
 export default function Header () {
   const myClasses = useStyles()
   const location = useLocation()
@@ -49,6 +55,7 @@ export default function Header () {
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
+  const { notifications } = useSelector((state) => state.notification)
 
   const dispatch = useDispatch()
   const handleDrawerOpen = () => {
@@ -65,8 +72,18 @@ export default function Header () {
             </Typography>
           </Box>
           <Box p={1}>
-            <IconButton aria-label='notifications' color='inherit' onClick={handleDrawerOpen}>
-              <NotificationsIcon fontSize='large' />
+            <IconButton
+              aria-label='notifications'
+              color='inherit'
+              onClick={handleDrawerOpen}
+            >
+              <Badge
+                badgeContent={notificationsNumber(notifications)}
+                overlap='circle'
+                color='secondary'
+              >
+                <NotificationsIcon fontSize='large' />
+              </Badge>
             </IconButton>
           </Box>
         </Box>
