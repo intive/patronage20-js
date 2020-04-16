@@ -6,6 +6,11 @@
   "map-modal-title": "Gap needed!",
   "map-modal-content": "Leave a gap between sensors, please.",
 
+  "sensor-remove-modal": "Removing sensor from the map",
+  "sensor-remove-modal-content": "Are you sure you want to remove the sensor from the map?",
+  "sensor-remove-cancel": "Cancel",
+  "sensor-remove-confirm": "Ok",
+
   "light-hue": "hue",
   "light-saturation": "saturation",
   "light-brightness": "brightness",
@@ -28,5 +33,6 @@
   "RGB-light-name": "RGB light",
   "RGB-light-desc": "Light",
 
-  "sensor-add-failed": "Sensor {{_id}} could not be added."
+  "sensor-add-failed": "Sensor {{_id}} could not be added.",
+  "sensor-remove-failed": "Error during removing sensor {{id}}"
 }

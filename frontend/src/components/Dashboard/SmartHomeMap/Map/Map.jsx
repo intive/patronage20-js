@@ -73,16 +73,16 @@ const HomeMap = () => {
     }
   }, [dispatch])
 
-  const { _id, dbError } = useSelector((state) => state.dbInteraction)
+  const { _id, addError } = useSelector((state) => state.dbInteraction)
 
   useEffect(() => {
-    if (dbError !== undefined) {
+    if (addError !== undefined) {
       enqueueSnackbar(t('dashboard:sensor-add-failed'), {
         variant: 'error'
       })
       setErrorPoints([...errorPoints, _id])
     }
-  }, [dbError])
+  }, [addError])
 
   /**
    * Transfroms sensors from store to appropriate format.
@@ -216,7 +216,8 @@ const HomeMap = () => {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         title={t('dashboard:map-modal-title')}
-        content={t('dashboard:map-modal-content')} />
+        content={t('dashboard:map-modal-content')}
+      />
     </div>
   )
 }
