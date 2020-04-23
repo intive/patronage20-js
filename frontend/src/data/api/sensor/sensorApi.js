@@ -16,7 +16,7 @@ export function * changeSensorStatus (sensorId) {
 }
 
 export function * refreshSensors () {
-  const res = yield axios.get('/api/v1/dashboard', { timeout: 4500 })
+  const res = yield axios.get('/api/v1/dashboard', { timeout: 4600 })
 
   return res.data
 }
