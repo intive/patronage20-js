@@ -19,25 +19,28 @@ const HvacStepper = ({ activeStep, steps, getStepContent, classes, handleBack, h
           <StepLabel>{label}</StepLabel>
           <StepContent>
             {getStepContent(index, classes)}
-            <div className={classes.actionsContainer}>
-              <div>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  className={classes.button}
-                >
-                  {t('hvac:back-button')}
-                </Button>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={handleNext}
-                  className={classes.button}
-                >
-                  {activeStep === steps.length - 1 ? t('hvac:finish-button') : t('hvac:next-button')}
-                </Button>
-              </div>
-            </div>
+            {
+              activeStep !== steps.length - 1 &&
+                <div className={classes.actionsContainer}>
+                  <div>
+                    <Button
+                      disabled={activeStep === 0}
+                      onClick={handleBack}
+                      className={classes.button}
+                    >
+                      {t('hvac:back-button')}
+                    </Button>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={handleNext}
+                      className={classes.button}
+                    >
+                      {t('hvac:next-button')}
+                    </Button>
+                  </div>
+                </div>
+            }
           </StepContent>
         </Step>
       ))}

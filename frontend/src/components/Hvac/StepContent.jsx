@@ -2,7 +2,20 @@
 
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { Typography, FormControl, TextField, MenuItem, InputLabel, Select, Slider, Box } from '@material-ui/core'
+import {
+  Typography,
+  FormControl,
+  TextField,
+  MenuItem,
+  InputLabel,
+  Select,
+  Slider,
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction
+} from '@material-ui/core'
 
 const HeatingSlider = withStyles({
   rail: {
@@ -156,4 +169,29 @@ export const TemperatureSet = ({ description, form, handleTemperatureChange, tem
       </Box>
     </div>
   )
+}
+
+export const StepsCompleted = ({ description, form }) => {
+  const celsius = key => ['heatingTemperature', 'coolingTemperature', 'hysteresis'].includes(key) ? <span>&deg;C</span> : ''
+  const textContent = key => key === 'windowSensorIds' ? form[`${key}`].join(', ') : form[`${key}`]
+  const content = Object.keys(form).map(key => (
+    <ListItem key={key}>
+      <ListItemText primary={description[`${key}`]} />
+      <ListItemSecondaryAction>
+        <ListItemText
+          edge='end'
+          primary={form[`${key}`] ? (
+            <span>
+              {textContent(key)} {celsius(key)}
+            </span>) : ''}
+        />
+      </ListItemSecondaryAction>
+    </ListItem>
+  ))
+  return (
+    <div>
+      <List>
+        {content}
+      </List>
+    </div>)
 }

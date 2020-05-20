@@ -2,19 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { makeStyles } from '@material-ui/core/styles'
-import {
-  Grid,
-  List,
-  ListItem,
-  Divider,
-  ListItemText,
-  ListItemSecondaryAction,
-  Button,
-  Paper,
-  Typography
-} from '@material-ui/core'
+import { Grid, Button, Paper } from '@material-ui/core'
 import { loadSensors, changeHvacRoomsDetails, validHvacFormSnackbar } from '@data/actions/sensor'
-import { RoomChoose, SensorsChoose, TemperatureSet } from './StepContent.jsx'
+import { RoomChoose, SensorsChoose, TemperatureSet, StepsCompleted } from './StepContent.jsx'
 import HvacStepper from './HvacStepper.jsx'
 import Page404 from '../UI/Page404'
 import Spinner from '../UI/Spinner'
@@ -37,31 +27,13 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2)
   },
   resetContainer: {
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
+    paddingTop: 0
   },
   margin: {
     margin: theme.spacing(1)
   }
 }))
-
-const drawItem = (description, form) => {
-  const celsius = key => ['heatingTemperature', 'coolingTemperature', 'hysteresis'].includes(key) ? <span>&deg;C</span> : ''
-  const textContent = key => key === 'windowSensorIds' ? form[`${key}`].join(', ') : form[`${key}`]
-  return Object.keys(form).map(key => (
-    <ListItem key={key}>
-      <ListItemText primary={description[`${key}`]} />
-      <ListItemSecondaryAction>
-        <ListItemText
-          edge='end'
-          primary={form[`${key}`] ? (
-            <span>
-              {textContent(key)} {celsius(key)}
-            </span>) : ''}
-        />
-      </ListItemSecondaryAction>
-    </ListItem>
-  ))
-}
 
 const temperatureRange = {
   heating: {
@@ -123,7 +95,7 @@ const Hvac = () => {
     windowSensorIds: t('hvac:windowSensorIds')
   }
 
-  const getSteps = () => [t('hvac:room'), t('hvac:sensors'), t('hvac:temperature')]
+  const getSteps = () => [t('hvac:room'), t('hvac:sensors'), t('hvac:temperature'), t('hvac:steps-completed')]
   const steps = getSteps()
 
   const getStepContent = (step, classes) => {
@@ -155,6 +127,12 @@ const Hvac = () => {
             form={form}
             handleTemperatureChange={handleTemperatureChange}
             temperatureRange={temperatureRange}
+          />)
+      case 3:
+        return (
+          <StepsCompleted
+            description={description}
+            form={form}
           />)
       default:
         return 'Unknown step'
@@ -265,13 +243,8 @@ const Hvac = () => {
               <InvalidHvacFormSnackbar />
               <HvacPutRequestErrorSnackbar />
               <HvacStepper activeStep={activeStep} steps={steps} getStepContent={getStepContent} classes={classes} handleBack={handleBack} handleNext={handleNext} />
-              {activeStep === steps.length && (
+              {activeStep === steps.length - 1 && (
                 <Paper square elevation={0} className={classes.resetContainer}>
-                  <Typography>{t('hvac:steps-completed')}</Typography>
-                  <Divider />
-                  <List>
-                    {drawItem(description, form)}
-                  </List>
                   <Button
                     onClick={handleBack}
                     className={classes.button}
