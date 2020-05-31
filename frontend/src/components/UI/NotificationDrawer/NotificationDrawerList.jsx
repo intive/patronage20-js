@@ -13,7 +13,6 @@ const useStyles = makeStyles((props) => ({
 
 const NotificationDrawerList = ({ notifications, handleNotificationCheck, sensors }) => {
   const classes = useStyles()
-  const sensor = notification => sensors.find(sensor => sensor.id === notification.sensorId) || ''
 
   const [clicked, setClicked] = useState(null)
 
@@ -25,7 +24,7 @@ const NotificationDrawerList = ({ notifications, handleNotificationCheck, sensor
             key={notification.id}
             notification={notification}
             handleNotificationCheck={handleNotificationCheck}
-            sensor={sensor(notification)}
+            sensorType={notification.type}
             clicked={clicked === notification.id}
             handleClick={() => setClicked(notification.id)}
           />
