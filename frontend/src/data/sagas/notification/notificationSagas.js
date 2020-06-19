@@ -26,8 +26,11 @@ export function * updateNotificationsSaga () {
     yield delay(5000)
     try {
       const result = yield call(fetchNotifications)
+      const sort = sortNotifications(result)
       const { checking } = (yield select()).notification
-      !checking && (yield put(updateNotificationsSuccess(sortNotifications(result))))
+      if (checking === 0) {
+        yield put(updateNotificationsSuccess(sort))
+      }
     } catch (error) {
       yield put(updateNotificationsFail(error))
     }

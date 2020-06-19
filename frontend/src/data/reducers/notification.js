@@ -7,7 +7,7 @@ const initialState = {
   isDrawerOpen: false,
   updating: false,
   updateError: undefined,
-  checking: false,
+  checking: 0,
   notificationContent: undefined,
   checkError: undefined
 }
@@ -18,7 +18,8 @@ export default function notification (state = initialState, action = {}) {
       return {
         ...state,
         fetching: true,
-        fetchError: undefined
+        fetchError: undefined,
+        checking: 0
       }
     case actionTypes.NOTIFICATIONS_FETCH_SUCCESS:
       return {
@@ -46,34 +47,32 @@ export default function notification (state = initialState, action = {}) {
       return {
         ...state,
         notificationContent: undefined,
-        checkError: undefined,
-        checking: false
+        checkError: undefined
       }
     case actionTypes.NOTIFICATIONS_CHECK_START:
       return {
         ...state,
         notificationContent: action.notification,
-        checking: true
+        checking: state.checking + 1
       }
     case actionTypes.NOTIFICATIONS_CHECK_SUCCESS:
       return {
         ...state,
         notifications: action.notifications,
-        checking: false,
         checkError: undefined
       }
     case actionTypes.NOTIFICATIONS_CHECK_FAIL:
       return {
         ...state,
         notifications: action.notifications,
-        checking: false,
         checkError: action.error
       }
     case actionTypes.NOTIFICATIONS_UPDATE:
       return {
         ...state,
         updating: true,
-        updateError: undefined
+        updateError: undefined,
+        checking: 0
       }
     case actionTypes.NOTIFICATIONS_UPDATE_SUCCESS:
       return {
